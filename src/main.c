@@ -45,19 +45,27 @@ int main(int argc, char **argv) {
 }
 
 static void generateDicewarePassword(unsigned int numberOfWords, char separator, char *const target) {
-    unsigned long key = 0;
+    FILE *random = fopen("/dev/random", "r");
+    // TODO: Error handling if fopen failed.
+    // TODO: Using /dev/random is not very portable
     for (unsigned int i = 0; i < numberOfWords; ++i) {
-        key = 0;
+        unsigned int key = 0;
         for (unsigned int j = 0; j < 5; ++j) {
-            key += rand() % 6 * pow(6, j); // TODO: Replace `rand` with a true random number generator
+            unsigned int read = 0;
+            fread(&read, sizeof(unsigned int), 1, random);
+            key += read % 6 * pow(6, j);
         }
         if (strlen(target) + strlen(dicewareList[key]) <= MAXIMUM_SIZE) {
             strcat(target, dicewareList[key]);
             if (i < numberOfWords - 1 && strlen(target) + 1 < MAXIMUM_SIZE) {
                 target[strlen(target)] = separator;
             } else {
+                fclose(random);
+                random = NULL;
                 return;
             }
         }
     }
+    fclose(random);
+    random = NULL;
 }

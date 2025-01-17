@@ -32,7 +32,13 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf("Generating %u passwords, each using %u words and the separator '%c'\n\n", numberOfPasswordsToCreate, numberOfWords, separator);
+    printf(
+        "Generating %u passwords, each using %u words and the separator '%c'.\nEach password will have an entropy of around %.02f bits.\n\n",
+        numberOfPasswordsToCreate,
+        numberOfWords,
+        separator,
+        12.9 * numberOfWords
+    );
 
     for (unsigned int i = 0; i < numberOfPasswordsToCreate; ++i) {
         memset(password, '\0', MAXIMUM_SIZE);

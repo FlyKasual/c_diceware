@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <getopt.h>
 #include <math.h>
 #include <string.h>
@@ -8,7 +7,7 @@
 
 #define MAXIMUM_SIZE 1024
 
-static void generateDicewarePassword(unsigned int numberOfWords, char separator, char *const target);
+static void generateDicewarePassword(const unsigned int numberOfWords, const char separator, char *const target);
 
 int main(int argc, char **argv) {
     unsigned int numberOfWords = 4;
@@ -50,7 +49,7 @@ int main(int argc, char **argv) {
     return EXIT_SUCCESS;
 }
 
-static void generateDicewarePassword(unsigned int numberOfWords, char separator, char *const target) {
+static void generateDicewarePassword(const unsigned int numberOfWords, const char separator, char *const target) {
     FILE *random = fopen("/dev/random", "r");
     // TODO: Error handling if fopen failed.
     // TODO: Using /dev/random is not very portable
